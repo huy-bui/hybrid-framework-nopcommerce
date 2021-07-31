@@ -1,10 +1,6 @@
 /com/
 /commons/
-/dev.properties
-/listenerConfig/
 /pageObjects/
 /pageUIs/
 /reportConfig/
-/runNopCommerceTest
-/testing.properties
 /utilities/
