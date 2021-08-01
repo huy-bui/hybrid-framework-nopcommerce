@@ -6,8 +6,10 @@ import java.util.Set;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -182,10 +184,72 @@ public class BasePage {
 	public String getElementText(WebDriver driver, String locator) {
 		return getElementByXpath(driver, locator).getText();
 	}
+	
+	public void checkToCheckboxOrRadio(WebDriver driver, String locator) {
+		if(!isElementSelected(driver, locator)) {
+			getElementByXpath(driver, locator).click();
+		}
+	}
+	
+	public void uncheckToCheckbox(WebDriver driver, String locator) {
+		if(isElementSelected(driver, locator)) {
+			getElementByXpath(driver, locator).click();
+		}
+	}
+	
+	public boolean isElementSelected(WebDriver driver, String locator) {
+		return getElementByXpath(driver, locator).isSelected();
+	}
+	
+	public boolean isElementEnbaled(WebDriver driver, String locator) {
+		return getElementByXpath(driver, locator).isEnabled();
+	}
+	
+	public boolean isElementDisplayed(WebDriver driver, String locator) {
+		return getElementByXpath(driver, locator).isDisplayed();
+	}
+	
+	public WebDriver switchToIframeByElement(WebDriver driver, String locator) {
+		return driver.switchTo().frame(getElementByXpath(driver, locator));
+	}
+	
+	public WebDriver switchToDefaultContent(WebDriver driver) {
+		return driver.switchTo().defaultContent();
+	}
+	
+	// Actions
+	
+	public void hoverToElement(WebDriver driver, String locator) {
+		actions = new Actions(driver);
+		actions.moveToElement(getElementByXpath(driver, locator)).perform();
+	}
+	
+	public void doubleClickToElement(WebDriver driver, String locator) {
+		actions = new Actions(driver);
+		actions.doubleClick(getElementByXpath(driver, locator)).perform();
+	}
+	
+	public void rightClickToElement(WebDriver driver, String locator) {
+		actions = new Actions(driver);
+		actions.contextClick(getElementByXpath(driver, locator)).perform();
+	}
+	
+	public void dragAndDropElement(WebDriver driver, String sourceLocator, String targetLocator) {
+		actions = new Actions(driver);
+		actions.dragAndDrop(getElementByXpath(driver, sourceLocator), getElementByXpath(driver, targetLocator)).perform();
+	}
+	
+	public void pressKeyToElement(WebDriver driver, String locator, Keys keyboard) {
+		actions = new Actions(driver);
+		actions.sendKeys(getElementByXpath(driver, locator), keyboard).perform();
+	}
 
+	// JavaScripts Executor
+	
 	private Alert alert;
 	private WebDriverWait explicitWait;
 	private long timeout = 30;
 	private Select select;
 	private JavascriptExecutor jsExecutor;
+	private Actions actions;
 }
