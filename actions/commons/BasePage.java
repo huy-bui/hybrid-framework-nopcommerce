@@ -244,12 +244,35 @@ public class BasePage {
 		actions.sendKeys(getElementByXpath(driver, locator), keyboard).perform();
 	}
 
-	// JavaScripts Executor
+	// JavaScripts Executor - Not implemented yet
+	
+	// Wait handling
+	
+	public void waitForElementVisible(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByXpath(locator)));
+	}
+	
+	public void waitForAllElementsVisible(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(getByXpath(locator)));
+	}
+	
+	public void waitForElementInvisible(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(getByXpath(locator)));
+	}
+	
+	public void waitForElementClickable(WebDriver driver, String locator) {
+		explicitWait = new WebDriverWait(driver, timeout);
+		explicitWait.until(ExpectedConditions.elementToBeClickable(getByXpath(locator)));
+	}
+	
 	
 	private Alert alert;
-	private WebDriverWait explicitWait;
-	private long timeout = 30;
 	private Select select;
-	private JavascriptExecutor jsExecutor;
 	private Actions actions;
+	private long timeout = 30;
+	private WebDriverWait explicitWait;
+	private JavascriptExecutor jsExecutor;
 }
